@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <title>main</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+</head>
+
+<body style="background-color:  #eff5f5;">
+    <div class="container-fluid">
+        <div class="container align-items-center">
+            <img class="img-fluid" src="{% static 'img/college.png' %}">
+        </div>
+        <div class="container-fluid" style="background-color: white; border: 2px solid   #b3cccc; height: 100%">
+            <div class="row">
+                <div class="col-sm-3" style="border: 1px solid   #b3cccc; margin:10px;">
+                    <ul class="list-group list-group-flush">
+                        <button type="button" class="btn btn-light " id="studentdetail" style="margin: 5px;">
+                            <li class="list-group-item">Student Detail</li>
+                        </button>
+                        <button type="button" class="btn btn-light " id="addstudent" style="margin: 5px;">
+                            <li class="list-group-item">Add student</li>
+                        </button>
+                        <button type="button" class="btn btn-light " style="margin: 5px;" id="subjectdetailsadd">
+                            <li class="list-group-item">Subject Details</li>
+                        </button>
+                        <button type="button" class="btn btn-light " style="margin: 5px;" id="allstudent">
+                            <li class="list-group-item">All student details</li>
+                        </button>
+                        <button type="button" class="btn btn-light " style="margin: 5px;" id="addmessage">
+                            <li class="list-group-item">Add messages</li>
+                        </button>
+                    </ul>
+                </div>
+                <div class="col-sm-8" style="border: 1px solid   #b3cccc; margin:10px;">
+                    <form id="studentform" style="display: none;" method="POST">
+                        {% csrf_token %}
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">Student Registration</h4>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Student Name</label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="name">Username</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        <input type="text" class="form-control" id="name" placeholder="Username" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="register" class="col-sm-2 col-form-label col-form-label text-center">Registration Id</label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="register">Registration Id</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-pip-fill"></i></div>
+                                        <input type="text" class="form-control" id="register" placeholder="Registration Id" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="mobile" class="col-sm-2 col-form-label col-form-label text-center">Mobile No. </label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-telephone"></i></i></div>
+                                        <input type="tel" class="form-control" id="mobile" placeholder="Mobile" pattern="[0-9]{10}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="email" class="col-sm-2 col-form-label col-form-label text-center">Email Id</label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="email">email</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-envelope-open-fill"></i></div>
+                                        <input type="email" class="form-control" id="email_id" placeholder="email" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="Password" class="col-sm-2 col-form-label col-form-label text-center">Password</label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="Password">password</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-key"></i></div>
+                                        <input type="password" class="form-control" id="Password" placeholder="Password" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="Password" class="col-sm-2 col-form-label col-form-label text-center">Confirm assword</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-lock"></i></div>
+                                        <input type="password" class="form-control" id="re-Password" placeholder="Confirm password" requiredb>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="branchselect" class="col-sm-2 col-form-label col-form-label text-center">Department</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" id="branchselect">
+                                        <option selected>Choose...</option>
+                                        <option value="Computer Engineering">Computer Engineering</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                        <option value="Electronics Engineering">Electronics Engineering</option>
+                                        <option value="Electrical Engineering">Electrical Engineering</option>
+                                        <option value="Aeronatical Engineering">Aeronatical Engineering</option>
+                                        <option value="Chemical Engineering">Chemical Engineering</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="register" class="col-sm-2 col-form-label col-form-label text-center">Registration Id</label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="student_year">Student Year</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-pip-fill"></i></div>
+                                        <input type="number" class="form-control" id="student_year" placeholder="Student Start year" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10 text-center">
+                                    <button type="button" class="btn btn-warning" id="submitstudentdata">Submit <i class="bi bi-save2"></i></button>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="detailsform" method="post">
+                        {% csrf_token %}
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">Student Detail</h4>
+                            <div class="row mb-3">
+                                <label for="reg_id" class="col-sm-2 col-form-label col-form-label text-center">Student Registeration Id</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        <input type="text" class="form-control" id="reg_id" placeholder="Registration Id" required>
+                                        <button class="btn btn-outline-secondary" id="getstudentdata" type="button">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="studentdata" style="display: none; margin-top: 5px;">
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">Student Detail</h4>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="{% static 'img/profilepic.png' %}" class="rounded-circle img-fluid" style="margin-top: 15px; margin-left: 40px;" alt="Cinque Terre" width="200px" height="340px">
+                                            <div class="card-body">
+                                                <h5 class="card-title" id="stud_name">Ankit Kumawat</h5>
+                                                <div class="card" style="width: 15rem;">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item"><b>Student ID :</b> <span id="stud_id">17EEBCS010</span></li>
+                                                        <li class="list-group-item" ><b>Department : </b> <span id="stud_dept">CSE</span></li>
+                                                        <li class="list-group-item" ><b>Section : </b> <span id="stud_sec">1</span></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8" style="overflow-y: scroll; height: 425px;">
+                                        <div class="card shadow-sm">
+                                            <div class="card-header bg-transparent border-0">
+                                                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h3>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th width="30%">Roll</th>
+                                                        <td width="2%">:</td>
+                                                        <td>125</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">Academic Year </th>
+                                                        <td width="2%">:</td>
+                                                        <td><span id="stud_year">2020</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">Gender</th>
+                                                        <td width="2%">:</td>
+                                                        <td>Male</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">blood</th>
+                                                        <td width="2%">:</td>
+                                                        <td>B+</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card shadow-sm">
+                                            <div class="card-header bg-transparent border-0">
+                                                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Contact Information</h3>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th width="30%">Current Address </th>
+                                                        <td width="2%">:</td>
+                                                        <td>house no - xyz kota Rajasthan </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">Permanent Address</th>
+                                                        <td width="2%">:</td>
+                                                        <td>house no - xyz kota Rajasthan</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">Email</th>
+                                                        <td width="2%">:</td>
+                                                        <td><span id="stud_email">xyz@gmail.com</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">Mobile No 1-</th>
+                                                        <td width="2%">:</td>
+                                                        <td><span id="stud_mob1">92-------3</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">Mobile No 2-</th>
+                                                        <td width="2%">:</td>
+                                                        <td>92-------4</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card shadow-sm">
+                                            <div class="card-header bg-transparent border-0">
+                                                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Library Information</h3>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Issue Date</th>
+                                                            <th scope="col">:</th>
+                                                            <th scope="col">Book Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="book">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card shadow-sm">
+                                            <div class="card-header bg-transparent border-0">
+                                                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Academic Information</h3>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th width="30%">SEM 1 % - </th>
+                                                        <td width="2%">:</td>
+                                                        <td id="sem1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">SEM 2 % -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="sem2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">SEM 3 % -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="sem3"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">SEM  4 % -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="sem4"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">SEM 5 % -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="sem5"></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th width="30%">SEM 6 % -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="sem6"></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th width="30%">SEM 7 % -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="sem7"></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th width="30%">SEM 8 % -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="sem8"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card shadow-sm">
+                                            <div class="card-header bg-transparent border-0">
+                                                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Challan Information</h3>
+                                            </div>
+                                            <div class="card-body pt-0">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th width="30%">Challan SEM 1  - </th>
+                                                        <td width="2%">:</td>
+                                                        <td id="ch1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">Challan SEM 2  -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="ch2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">Challan SEM 3  -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="ch3"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">Challan SEM  4  -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="ch4"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="30%">Challan SEM 5  -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="ch5"></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th width="30%">Challan SEM 6  -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="ch6"></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th width="30%">Challan SEM 7  -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="ch7"></td>
+                                                    </tr>
+                                                     <tr>
+                                                        <th width="30%">Challan SEM 8  -</th>
+                                                        <td width="2%">:</td>
+                                                        <td id="ch8"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="subdetailsform" style="display: none;" method="POST">
+                        {% csrf_token %}
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">Subject Detail</h4>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Semester</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        <input type="number" class="form-control" id="sem_id" placeholder="Enter Sem" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Subject Id</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        <input type="text" class="form-control" id="sub_id" placeholder="Subject Id" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="sub_data" class="col-sm-2 col-form-label col-form-label text-center">Subject Details</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="sub_data" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 4px;">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10 text-center">
+                                    <button type="button" class="btn btn-warning" id="subject_add">Submit <i class="bi bi-save2"></i></button>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="alldetailsform" style="display: none;">
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">All Student Detail</h4>
+                            <div class="row mb-3">
+                                <label for="branchselect" class="col-sm-2 col-form-label col-form-label text-center">Department</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" id="branchselect">
+                                        <option selected>Choose...</option>
+                                        <option value="1">Computer Engineering</option>
+                                        <option value="2">Information Technology</option>
+                                        <option value="3">Mechanical Engineering</option>
+                                        <option value="3">Electronics Engineering</option>
+                                        <option value="3">Electrical Engineering</option>
+                                        <option value="3">Aeronatical Engineering</option>
+                                        <option value="3">Chemical Engineering</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Year(Start - End)</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        <input type="text" class="form-control" id="name" placeholder="Year" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 4px;">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10 text-center">
+                                    <button type="button" class="btn btn-warning">Submit <i class="bi bi-save2"></i></button>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="msgform" style="display: none;">
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">Add messages</h4>
+                            <div class="input-group">
+                                <span class="input-group-text">Message</span>
+                                <textarea class="form-control" aria-label="With textarea"></textarea>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 4px;">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10 text-center">
+                                    <button type="button" class="btn btn-warning">Submit <i class="bi bi-save2"></i></button>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+        $("#addstudent").click(function() {
+            $("#detailsform").hide();
+            $("#subdetailsform").hide();
+            $("#alldetailsform").hide();
+            $("#msgform").hide();
+            $("#studentdata").hide();
+            $("#studentform").toggle();
+        });
+        $("#submitstudentdata").click(function(e){
+            e.preventDefault();
+            let name=$("#name").val();
+            let regid=$("#register").val();
+            let mob=$("#mobile").val();
+            let email=$("#email_id").val();
+            let pass=$("#Password").val();
+            let repass=$("#re-Password").val();
+            let dept=$("#branchselect").val();
+            let year=$("#student_year").val();
+            let csr=$("input[name=csrfmiddlewaretoken]").val();
+            stdata={name : name ,regid:regid , mob : mob ,email : email , pass : pass, repass : repass , dept : dept,year : year ,csrfmiddlewaretoken:csr};
+            $.ajax({
+                url : "{% url 'studentadddata' %}",
+                method : "POST" ,
+                data : stdata ,
+                dataType : "json",
+                success : function(data)
+                {
+                    if(data.status == "Save")
+                    {
+                        console.log("Forms submitted successfully");
+                        alert("Form submitted successfully");
+                        $("#studentform")[0].reset();
+                    }
+                    else if(data.status == 'no_match')
+                    {
+                        alert("Password not Same");
+                    }
+                }
+            });
+        });
+        $('#subject_add').click(function(e){
+            e.preventDefault();
+            let sem = $("#sem_id").val();
+            let subj =$("#sub_id").val();
+            let text =$("#sub_data").val();
+            let csr=$("input[name=csrfmiddlewaretoken]").val();
+            subdata={sem:sem,subj:subj,text:text,csrfmiddlewaretoken:csr}
+            $.ajax({
+                url : "{% url 'subjectadd' %}",
+                method : "POST",
+                data : subdata,
+                dataType : "json",
+                success : function(data)
+                {
+                    if(data.status=="fill_all")
+                    {
+                        alert("Please fill all Fields");
+                    }
+                    else if(data.status=="pass")
+                    {
+                        alert("Data succesfully added");
+                        $('#subdetailsform')[0].reset();
+                    }
+                    else
+                    {
+                        alert("Data is not submitted");
+                    }
+                }
+            });
+        });
+        $("#studentdetail").click(function() {
+            $("#studentform").hide();
+            $("#subdetailsform").hide();
+            $("#alldetailsform").hide();
+            $("#msgform").hide();
+            $("#detailsform").toggle();
+        });
+        $("#subjectdetailsadd").click(function() {
+            $("#studentform").hide();
+            $("#detailsform").hide();
+            $("#alldetailsform").hide();
+            $("#msgform").hide();
+            $("#studentdata").hide();
+            $("#subdetailsform").toggle();
+        });
+        $("#allstudent").click(function() {
+            $("#studentform").hide();
+            $("#detailsform").hide();
+            $("#subdetailsform").hide();
+            $("#msgform").hide();
+            $("#studentdata").hide();
+            $("#alldetailsform").toggle();
+        });
+        $("#addmessage").click(function() {
+            $("#studentform").hide();
+            $("#detailsform").hide();
+            $("#subdetailsform").hide();
+            $("#alldetailsform").hide();
+            $("#studentdata").hide();
+            $("#msgform").toggle();
+        });
+        $("#getstudentdata").click(function(e){
+            console.log("Clicked");
+            out="";
+            e.preventDefault();
+                let reg_id =$("#reg_id").val();
+                let csr=$("input[name=csrfmiddlewaretoken]").val();
+                sdata ={reg_id:reg_id,csrfmiddlewaretoken:csr}
+                $.ajax({
+                    url : "{% url 'getStudentData' %}",
+                    method : "POST",
+                    data : sdata,
+                    dataType : "json",
+                    success : function(data){
+                        if(data.status == "pass")
+                        {
+                            console.log(data.booksdata);
+                            $("#studentdata").toggle();
+                            $("#stud_name").text(data.student_data[0].student_name);
+                            $("#stud_id").text(data.student_data[0].student_id);
+                            $("#stud_dept").text(data.student_data[0].student_dept);
+                            $("#stud_year").text(data.student_data[0].student_year);
+                            $("#stud_email").text(data.student_data[0].student_email);
+                            $("#stud_mob1").text(data.student_data[0].student_mobile);
+                            if(data.booksdata)
+                            {
+                                var i=1;
+                                for(var key in data.booksdata)
+                                {
+                                    var value=data.booksdata[key];
+                                    out+="<tr><td>"+ i +"</td><td>"+value[1] +"</td><td>:</td><td>"+value[0]+"</td></tr>";
+                                    i++;
+                                }
+                                $(".book").html(out);
+                            }
+                            else{}
+                          $("#sem1").text(data.semstudent[0].sem1);
+                          $("#sem2").text(data.semstudent[0].sem2);
+                          $("#sem3").text(data.semstudent[0].sem3);
+                          $("#sem4").text(data.semstudent[0].sem4);
+                          $("#sem5").text(data.semstudent[0].sem5);
+                          $("#sem6").text(data.semstudent[0].sem6);
+                          $("#sem7").text(data.semstudent[0].sem7);
+                          $("#sem8").text(data.semstudent[0].sem8);
+                          $("#ch1").text(data.challanstudent[0].ch1);
+                          $("#ch2").text(data.challanstudent[0].ch2);
+                          $("#ch3").text(data.challanstudent[0].ch3);
+                          $("#ch4").text(data.challanstudent[0].ch4);
+                          $("#ch5").text(data.challanstudent[0].ch5);
+                          $("#ch6").text(data.challanstudent[0].ch6);
+                          $("#ch7").text(data.challanstudent[0].ch7);
+                          $("#ch8").text(data.challanstudent[0].ch8);
+                        }
+                        else
+                        {
+                            alert("Wrong Entry !! Enter the Write details ");
+                        }
+                    }
+                });
+            });
+    });
+    </script>
+</body>
+
+</html>

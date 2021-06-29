@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <title>main</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+</head>
+
+<body style="background-color:  #eff5f5;">
+    <div class="container-fluid">
+        <div class="container align-items-center">
+            <img class="img-fluid" src="{% static 'img/college.png' %}">
+        </div>
+        <div class="container-fluid" style="background-color: white; border: 2px solid   #b3cccc; height: 100%">
+            <div class="row">
+                <div class="col-sm-3" style="border: 1px solid   #b3cccc; margin:10px;">
+                    <ul class="list-group list-group-flush">
+                        <button type="button" class="btn btn-light " id="studentdetail" style="margin: 5px;">
+                            <li class="list-group-item">Yours Details</li>
+                        </button>
+                        <button type="button" class="btn btn-light " id="addstudent" style="margin: 5px;">
+                            <li class="list-group-item">Edit Your Details</li>
+                        </button>
+                        <button type="button" class="btn btn-light " style="margin: 5px;" id="subjectdetailsadd">
+                            <li class="list-group-item">Add sem Result</li>
+                        </button>
+                        <button type="button" class="btn btn-light " style="margin: 5px;" id="allstudent">
+                            <li class="list-group-item">Add Challan Details</li>
+                        </button>
+                        <button type="button" class="btn btn-light " style="margin: 5px;" id="addmessage">
+                            <li class="list-group-item">Check SEM Details</li>
+                        </button>
+                    </ul>
+                </div>
+                <div class="col-sm-8" style="border: 1px solid   #b3cccc; margin:10px;">
+                    <form id="studentform" style="display: none;" method="POST">
+                        {% csrf_token %}
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">Update Your Results</h4>
+                            <input type="hidden" id="stud_no" value="{{student.0.student_no}}">
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Student Name</label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="name">Username</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        <input type="text" class="form-control" id="name" placeholder="Username" value="{{student.0.student_name}}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="register" class="col-sm-2 col-form-label col-form-label text-center">Registration Id</label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="register">Registration Id</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-pip-fill"></i></div>
+                                        <input type="text" class="form-control" id="register" value="{{student.0.student_id}}" readonly="true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="register" class="col-sm-2 col-form-label col-form-label text-center">Gender </label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="register">Gender </label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-pip-fill"></i></div>
+                                        <input type="text" class="form-control" id="gender" value="{{student.0.student_gendere}}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="mobile" class="col-sm-2 col-form-label col-form-label text-center">Mobile No. </label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-telephone"></i></i></div>
+                                        <input type="tel" class="form-control" id="mobile"  value="{{student.0.student_mobile}}" pattern="[0-9]{10}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="email" class="col-sm-2 col-form-label col-form-label text-center">Email Id</label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="email_id">email</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-envelope-open-fill"></i></div>
+                                        <input type="email" class="form-control" id="email_id" value="{{student.0.student_email}}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="Password" class="col-sm-2 col-form-label col-form-label text-center">Password</label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="Password">password</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-key"></i></div>
+                                        <input type="password" class="form-control" id="Password" value="{{ student.0.student_pass }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="Password" class="col-sm-2 col-form-label col-form-label text-center">Confirm assword</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-lock"></i></div>
+                                        <input type="password" class="form-control" id="re-Password" value="{{ student.0.student_pass }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="branchselect" class="col-sm-2 col-form-label col-form-label text-center">Department</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" id="branchselect" value="{{ student.0.student_dept }}">
+                                        <option value="Computer Engineering">Computer Engineering</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                        <option value="Electronics Engineering">Electronics Engineering</option>
+                                        <option value="Electrical Engineering">Electrical Engineering</option>
+                                        <option value="Aeronatical Engineering">Aeronatical Engineering</option>
+                                        <option value="Chemical Engineering">Chemical Engineering</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="register" class="col-sm-2 col-form-label col-form-label text-center">YEAR </label>
+                                <div class="col-sm-10">
+                                    <label class="visually-hidden" for="student_year">Student Year</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-pip-fill"></i></div>
+                                        <input type="number" class="form-control" id="student_year" value="{{student.0.student_year}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10 text-center">
+                                    <button type="button" class="btn btn-warning" id="submitstudentdata">Update <i class="bi bi-save2"></i></button>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="editform" method="post">
+                        {% csrf_token %}
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">Student Detail</h4>
+                            <div class="form-group row">
+                                <label for="disabledname" class="col-sm-2 control-label">Name  : </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="disabledname" type="text" value="{{student.0.student_name}}" readonly="true">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="disabledRegID" class="col-sm-2 control-label">Registration Id  : </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="disabledRegID" type="text" value={{student.0.student_id}} readonly="true">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="disabledMobile" class="col-sm-2 control-label">Mobile No  : </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="disabledMobile" type="text"  value="{{student.0.student_mobile}}" readonly="true">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="disabledEmail" class="col-sm-2 control-label">Email  : </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="disabledEmail" type="text" value=" {{ student.0.student_email }} " readonly="true">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="disabledInput" class="col-sm-2 control-label">Gender : </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="disabledInput" type="text" value=" {{ student.0.student_gendere }} " readonly="true">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="disabledept" class="col-sm-2 control-label">Department : </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="disabledept" type="text" value=" {{ student.0.student_dept }} " readonly="true">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="disabledInput" class="col-sm-2 control-label">Year : </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="disabledInput" type="text" value=" {{ student.0.student_year }} " readonly="true">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="examForm" style="display: none;" method="POST">
+                        {% csrf_token %}
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">Exam Results</h4>
+                            {% if semstudent %}
+                            <input type="hidden" name="sem_id" class="form-control" id="sem_id" value="{{ semstudent.0.sem_id }}">
+                            {% else %}
+                            <input type="hidden" name="sem_id" class="form-control" id="sem_id" value="">
+                            {% endif %}
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Semester 1</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if semstudent %}
+                                        <input type="text" class="form-control" id="sem_id1" value=" {{ semstudent.0.sem1 }} " required>
+                                        {% else %}
+                                        <input type="text" class="form-control" id="sem_id1"  placeholder="Sem 1 Result" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Semester 2</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if semstudent %}
+                                        <input type="text" class="form-control" id="sem_id2" value="{{ semstudent.0.sem2 }} " required>
+                                        {% else %}
+                                        <input type="text" class="form-control" id="sem_id2"  placeholder="Sem 2 Result" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Semester 3</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if semstudent %}
+                                        <input type="text" class="form-control" id="sem_id3" value="{{ semstudent.0.sem3 }} " required>
+                                        {% else %}
+                                        <input type="number" class="form-control" id="sem_id3" placeholder="Sem 3 Result" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Semester 4</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if semstudent %}
+                                        <input type="text" class="form-control" id="sem_id4" value="{{ semstudent.0.sem4 }} " required>
+                                        {% else %}
+                                        <input type="number" class="form-control" id="sem_id4" placeholder="Sem 4 Result" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Semester 5</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if semstudent %}
+                                        <input type="text" class="form-control" id="sem_id5" value="{{ semstudent.0.sem5 }} " required>
+                                        {% else %}
+                                        <input type="number" class="form-control" id="sem_id5" placeholder="Sem 5 Result" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Semester 6</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if semstudent %}
+                                        <input type="text" class="form-control" id="sem_id6" value="{{ semstudent.0.sem6 }} " required>
+                                        {% else %}
+                                        <input type="number" class="form-control" id="sem_id6" placeholder="Sem 6 Result" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Semester 7</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if semstudent %}
+                                        <input type="text" class="form-control" id="sem_id7" value="{{ semstudent.0.sem7 }} " required>
+                                        {% else %}
+                                        <input type="number" class="form-control" id="sem_id7" placeholder="Sem 7 Result" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label col-form-label text-center">Semester 8</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if semstudent %}
+                                        <input type="text" class="form-control" id="sem_id8" value="{{ semstudent.0.sem8 }} " required>
+                                        {% else %}
+                                        <input type="number" class="form-control" id="sem_id8" placeholder="Sem 8 Result" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 4px;">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10 text-center">
+                                    <button type="button" class="btn btn-warning" id="add_result">Submit <i class="bi bi-save2"></i></button>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="challanform" style="display: none;" method="post">
+                        {% csrf_token %}
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">Challan Details</h4>
+                            {% if challans %}
+                            <input type="hidden" class="form-control" id="ch_id" value="{{challans.0.challan_id}}">
+                            {% else %}
+                            <input type="hidden" class="form-control" id="ch_id" name="ch_id">
+                            {% endif %}
+                            <div class="row mb-3">
+                                <label for="challan_id1" class="col-sm-2 col-form-label col-form-label text-center">Challan Sem 1</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if challans %}
+                                        <input type="text" class="form-control" id="challan_id1" value="{{challans.0.ch1}}" required>
+                                        {% else %}
+                                        <input type="text" class="form-control" id="challan_id1" placeholder="Challan sem 1" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="challan_id2" class="col-sm-2 col-form-label col-form-label text-center">Challan Sem 2</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if challans %}
+                                        <input type="text" class="form-control" id="challan_id2" value="{{challans.0.ch2}}" required>
+                                        {% else %}
+                                        <input type="text" class="form-control" id="challan_id2" placeholder="Challan sem 2" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="challan_id3" class="col-sm-2 col-form-label col-form-label text-center">Challan Sem 3</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if challans %}
+                                        <input type="text" class="form-control" id="challan_id3" value="{{challans.0.ch3}}" required>
+                                        {% else %}
+                                        <input type="text" class="form-control" id="challan_id3" placeholder="Challan sem 3" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="challan_id4" class="col-sm-2 col-form-label col-form-label text-center">Challan Sem 4</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if challans %}
+                                        <input type="text" class="form-control" id="challan_id4" value="{{challans.0.ch4}}" required>
+                                        {% else %}
+                                        <input type="text" class="form-control" id="challan_id4" placeholder="Challan sem 4" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="challan_id5" class="col-sm-2 col-form-label col-form-label text-center">Challan Sem 5</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if challans %}
+                                        <input type="text" class="form-control" id="challan_id5" value="{{challans.0.ch5}}" required>
+                                        {% else %}
+                                        <input type="text" class="form-control" id="challan_id5" placeholder="Challan sem 5" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="challan_id6" class="col-sm-2 col-form-label col-form-label text-center">Challan Sem 6</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if challans %}
+                                        <input type="text" class="form-control" id="challan_id6" value="{{challans.0.ch6}}" required>
+                                        {% else %}
+                                        <input type="text" class="form-control" id="challan_id6" placeholder="Challan sem 6" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="challan_id7" class="col-sm-2 col-form-label col-form-label text-center">Challan Sem 7</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if challans %}
+                                        <input type="text" class="form-control" id="challan_id7" value="{{challans.0.ch7}}" required>
+                                        {% else %}
+                                        <input type="text" class="form-control" id="challan_id7" placeholder="Challan sem 7" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="challan_id8" class="col-sm-2 col-form-label col-form-label text-center">Challan Sem 8</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <div class="input-group-text"><i class="bi bi-person-square"></i></div>
+                                        {% if challans %}
+                                        <input type="text" class="form-control" id="challan_id8" value="{{challans.0.ch8}}" required>
+                                        {% else %}
+                                        <input type="text" class="form-control" id="challan_id8" placeholder="Challan sem 8" required>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 4px;">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10 text-center">
+                                    <button type="button" class="btn btn-warning" id="updatechallan">Update <i class="bi bi-save2"></i></button>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="msgform" style="display: none;">
+                        <div class="container-fluid" style="margin: 10px; background-color: #D3D3D3;">
+                            <h4 class="text-center">Add messages</h4>
+                            <div class="input-group">
+                                <span class="input-group-text">SEM DETAILS</span>
+                                <textarea class="form-control" aria-label="With textarea"></textarea>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 4px;">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10 text-center">
+                                    <button type="button" class="btn btn-warning">Submit <i class="bi bi-save2"></i></button>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-10" style="height: 8px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+        $("#addstudent").click(function() {
+            $("#editform").hide();
+            $("#examForm").hide();
+            $("#challanform").hide();
+            $("#msgform").hide();
+            $("#studentform").toggle();
+        });
+        $("#studentdetail").click(function() {
+            $("#studentform").hide();
+            $("#examForm").hide();
+            $("#challanform").hide();
+            $("#msgform").hide();
+            $("#editform").toggle();
+        });
+        $("#subjectdetailsadd").click(function() {
+            $("#studentform").hide();
+            $("#editform").hide();
+            $("#challanform").hide();
+            $("#msgform").hide();
+            $("#studentdata").hide();
+            $("#examForm").toggle();
+        });
+        $("#allstudent").click(function() {
+            $("#studentform").hide();
+            $("#editform").hide();
+            $("#examForm").hide();
+            $("#msgform").hide();
+            $("#challanform").toggle();
+        });
+        $("#addmessage").click(function() {
+            $("#studentform").hide();
+            $("#editform").hide();
+            $("#examForm").hide();
+            $("#challanform").hide();
+            $("#msgform").toggle();
+        });
+        $("#add_result").click(function(e){
+            e.preventDefault();
+            let sem_id=$("#sem_id").val();
+            let reg_id=$("#disabledRegID").val();
+            let sem1=$("#sem_id1").val();
+            let sem2=$("#sem_id2").val();
+            let sem3=$("#sem_id3").val();
+            let sem4=$("#sem_id4").val();
+            let sem5=$("#sem_id5").val();
+            let sem6=$("#sem_id6").val();
+            let sem7=$("#sem_id7").val();
+            let sem8=$("#sem_id8").val();
+            let csr=$("input[name=csrfmiddlewaretoken]").val();
+            mydata = {sem1:sem1,sem2:sem2,sem3:sem3,sem4:sem4,sem5:sem5,sem6:sem6,sem7:sem7,sem8:sem8,reg_id:reg_id,sem_id:sem_id,csrfmiddlewaretoken:csr};
+            $.ajax({
+                url : '{% url 'SemResult' %}',
+                method : "POST",
+                data : mydata,
+                 dataType : "json",
+                success : function(data){
+                    if(data.status=='save'){
+                        alert("SEM Added !!");
+                        $("#sem_id1").val(data.semstudent[0].sem1);
+                        $("#sem_id2").val(data.semstudent[0].sem2);
+                        $("#sem_id3").val(data.semstudent[0].sem3);
+                        $("#sem_id4").val(data.semstudent[0].sem4);
+                        $("#sem_id5").val(data.semstudent[0].sem5);
+                        $("#sem_id6").val(data.semstudent[0].sem6);
+                        $("#sem_id7").val(data.semstudent[0].sem7);
+                        $("#sem_id8").val(data.semstudent[0].sem8);
+                        $("#sem_id").val(data.semstudent[0].sem_id);
+                    }
+                    else
+                    {
+                        alert("Problem while Result");
+                    }
+                }
+            });
+
+        });
+        $("#updatechallan").click(function(e){
+            e.preventDefault();
+            let reg_id=$("#disabledRegID").val();
+            let challan1=$("#challan_id1").val();
+            let challan2=$("#challan_id2").val();
+            let challan3=$("#challan_id3").val();
+            let challan4=$("#challan_id4").val();
+            let challan5=$("#challan_id5").val();
+            let challan6=$("#challan_id6").val();
+            let challan7=$("#challan_id7").val();
+            let challan8=$("#challan_id8").val();
+            let ch_id=$("#ch_id").val();
+            let csr=$("input[name=csrfmiddlewaretoken]").val();
+            mydata={ch1:challan1,challan2:challan2,challan3:challan3,challan4:challan4,challan5:challan5,challan6:challan6,challan7:challan7,challan8:challan8,reg_id:reg_id,ch_id:ch_id,csrfmiddlewaretoken:csr};
+            $.ajax({
+                url : '{% url 'challan' %}',
+                method : "POST",
+                data : mydata,
+                 dataType : "json",
+                success : function(data){
+                    if(data.status=='save'){
+                        alert("Challan Added !!");
+                        $("#challan_id1").val(data.challanstudent[0].ch1);
+                        $("#challan_id2").val(data.challanstudent[0].ch2);
+                        $("#challan_id3").val(data.challanstudent[0].ch3);
+                        $("#challan_id4").val(data.challanstudent[0].ch4);
+                        $("#challan_id5").val(data.challanstudent[0].ch5);
+                        $("#challan_id6").val(data.challanstudent[0].ch6);
+                        $("#challan_id7").val(data.challanstudent[0].ch7);
+                        $("#challan_id8").val(data.challanstudent[0].ch8);
+                        $("#ch_id").val(data.challanstudent[0].challan_id);
+                    }
+                    else
+                    {
+                        alert("Problem while Result");
+                    }
+                }
+            });
+        });
+        $("#submitstudentdata").click(function(e){
+            e.preventDefault();
+            let stud_no = $("#stud_no").val();
+            let name = $("#name").val();
+            let regi = $("#register").val();
+            let gender = $("#gender").val();
+            let mobile = $("#mobile").val();
+            let email = $("#email_id").val();
+            let pass =$("#Password").val();
+            let pass2 = $("#re-Password").val();
+            let branch = $("#branchselect").val();
+            let year = $("#student_year").val();
+            let csr=$("input[name=csrfmiddlewaretoken]").val();
+            mydata ={stud_no:stud_no,name:name,regi:regi,gender:gender,mobile:mobile,email:email,pass:pass,pass2:pass2,branch:branch,year:year,csrfmiddlewaretoken:csr};
+            $.ajax({
+                url : '{% url 'StudentUpdate' %}',
+                method : "POST",
+                data : mydata,
+                 dataType : "json",
+                success : function(data){
+                    if(data.status=='save'){
+                        alert(" Details Updated!!");
+                    }
+                    else if(data.status=='no_pass')
+                    {
+                        alert("Password must be same !!");
+                    }
+                    else
+                    {
+                        alert("Problem while Result");
+                    }
+                }
+            });
+        });
+    });
+    </script>
+</body>
+
+</html>

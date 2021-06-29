@@ -1,0 +1,22 @@
+*{
+	box-sizing: border-box;
+}
+body{
+	min-height: 100%;
+	background-color: #216277;
+}
+.boxmain
+{
+	margin-top: 100px;
+}
+div.a{
+	text-align: center;
+	color: white;
+	margin-top: 40px;
+}
+.boxmain{
+	width: 1000px;
+	height: 600px;
+	margin-top: 100px;
+	border: solid 2px white;
+}
